@@ -1,4 +1,6 @@
 --EDA--: 
 --Number of rows in the dataset
 SELECT COUNT(*)
-FROM spotify;
+FROM spotify; 
+
+--
