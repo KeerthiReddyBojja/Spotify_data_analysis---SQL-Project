@@ -15,4 +15,13 @@ This dataset contains information about 24 columns and 20,000+ rows, including a
       • 468 tracks had licensed = 'false'.
       • 576 tracks have '0' streams which includes globally popular tracks such as "Enter Sandman (Remastered)" by Metallica and "The Great Gig in the Sky" by Pink Floyd, which is implausible. 
 
+## 2. Key Insights
+
+## Basic Exploration
+     • Total rows in the dataset: 20,595 rows (including headers).
+     • Distinct Album types: Single, Album, Compilation.
+     • Track Distribution by Platform: 
+          a. Majority of tracks are marked as "most played on Spotify".
+          b. YouTube accounts for fewer tracks in the dataset. 
+      
 
