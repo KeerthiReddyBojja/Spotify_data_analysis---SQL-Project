@@ -25,11 +25,59 @@ This dataset contains information about 24 columns and 20,000+ rows, including a
           b. YouTube accounts for fewer tracks in the dataset. 
 
 ## Performance Metrics 
-      • Top Artists by Total Streams: 
-         SELECT artist, SUM(stream) AS total_streams
-         FROM spotify
-         GROUP BY artist
-         ORDER BY total_streams DESC
-         LIMIT 10;
+    • Top Artists by Total Streams: 
+               SELECT artist, SUM(stream) AS total_streams
+               FROM spotify
+               GROUP BY artist
+               ORDER BY total_streams DESC
+               LIMIT 10;
+               
+    • Most Viewed Tracks on YouTube:
+              SELECT track, artist, views
+              FROM spotify
+              ORDER BY views DESC
+              LIMIT 10;
 
+    • Top 3 Most-Viewed Tracks per Artist:
+              WITH ranked_tracks AS (
+                     SELECT 
+                              artist,
+                              track,
+                              views,
+                              RANK() OVER (PARTITION BY artist ORDER BY views DESC) AS rank
+                     FROM spotify
+             )
+            SELECT artist, track, views
+            FROM ranked_tracks
+            WHERE rank <= 3
+            ORDER BY artist, rank;
+            
+    • Top 3 Most-Streamed Tracks per Artist: 
+              WITH ranked_tracks AS (
+                     SELECT 
+                               artist,
+                               track,
+                               stream,
+                               RANK() OVER (PARTITION BY artist ORDER BY stream DESC) AS rank
+                    FROM spotify
+               )
+              SELECT artist, track, stream
+              FROM ranked_tracks
+              WHERE rank <= 3
+              ORDER BY artist, rank;
+
+## Song Duration Analysis
+    • Categories by Duration: 
+       SELECT 
+              CASE 
+	         WHEN duration_min < 3 THEN 'Short'
+	         WHEN duration_min BETWEEN 3 AND 4 THEN 'Medium'
+	         ELSE 'Long'
+	    END AS duration_category, 
+	   COUNT(*) AS count
+       FROM spotify
+       GROUP BY duration_category;
+Short tracks (<3 minutes): 5159 tracks
+Medium tracks (3-4 minutes): 9066 tracks
+Long tracks (>4 minutes): 6367 tracks
 
