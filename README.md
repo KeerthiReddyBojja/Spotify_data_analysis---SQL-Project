@@ -5,12 +5,12 @@ The dataset was sourced from [Kaggle.](https://www.kaggle.com/datasets/sanjancha
 ## 1. Dataset Overview
 This dataset contains information about 24 columns and 20,000+ rows, including audio features like danceability, energy, and liveliness.
 
-##Columns
+## Columns
           • Track Information: artist, track, album, album_type.
           • Audio features: danceability, energy, tempo, valence, loudness, etc.
           • Platform Engagement: views, stream, most_played_on (Spotify/YouTube).
 
-##Data Inconsistencies: 
+## Data Inconsistencies: 
    • 469 tracks had '0' views and/or streams, yet 21 of them were marked as ''most played on YouTube".
    • 468 tracks had licensed = 'false'.
    • 576 tracks have '0' streams which includes globally popular tracks such as "Enter Sandman (Remastered)" by Metallica and "The Great Gig in the Sky" by Pink Floyd, which is implausible. 
