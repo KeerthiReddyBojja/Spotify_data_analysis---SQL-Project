@@ -41,10 +41,10 @@ This dataset contains information about 24 columns and 20,000+ rows, including a
     • Top 3 Most-Viewed Tracks per Artist:
               WITH ranked_tracks AS (
                      SELECT 
-                              artist,
-                              track,
-                              views,
-                              RANK() OVER (PARTITION BY artist ORDER BY views DESC) AS rank
+                        artist,
+                        track,
+                        views,
+                        RANK() OVER (PARTITION BY artist ORDER BY views DESC) AS rank
                      FROM spotify
              )
             SELECT artist, track, views
@@ -55,10 +55,10 @@ This dataset contains information about 24 columns and 20,000+ rows, including a
     • Top 3 Most-Streamed Tracks per Artist: 
               WITH ranked_tracks AS (
                      SELECT 
-                               artist,
-                               track,
-                               stream,
-                               RANK() OVER (PARTITION BY artist ORDER BY stream DESC) AS rank
+                        artist,
+                        track,
+                        stream,
+                        RANK() OVER (PARTITION BY artist ORDER BY stream DESC) AS rank
                     FROM spotify
                )
               SELECT artist, track, stream
