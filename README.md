@@ -23,5 +23,13 @@ This dataset contains information about 24 columns and 20,000+ rows, including a
      • Track Distribution by Platform: 
           a. Majority of tracks are marked as "most played on Spotify".
           b. YouTube accounts for fewer tracks in the dataset. 
-      
+
+## Performance Metrics 
+      • Top Artists by Total Streams: 
+         SELECT artist, SUM(stream) AS total_streams
+         FROM spotify
+         GROUP BY artist
+         ORDER BY total_streams DESC
+         LIMIT 10;
+
 
