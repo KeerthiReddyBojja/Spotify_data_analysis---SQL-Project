@@ -43,30 +43,40 @@ The dataset provides a detailed compilation of music-related information, focusi
 5. Trend Analysis: Observe how musical trends evolve over time.
 
 ## Data Quality Issues
-1. **Duplicate Records:** Analysis revealed 81 duplicate records in the dataset. 
-2. **Tracks with Zero Views or Streams:** 1024 tracks have either zero views or streams recorded, with some having both metrics missing, raising concerns about data accuracy.
-3. **Platform Discrepancies:** Out of these, 576 tracks were most played on YouTube and 449 on Spotify, suggesting incomplete or consistent recording of views and streams.
-4. **No Data:** 21 tracks had both views and streams equal to zero, alongside missing metrics like title, comments, and likes.
-5. **Incomplete data:** Certain tracks lack critical information such as audio features, or comments.
-5. Popular artists with significant audiences also appear in the zero-views or zero-streams category, contradicting expected data trends. 
+1. **Tracks with Zero Views or Streams:** 1024 tracks have either zero views or streams recorded, with some having both metrics missing, raising concerns about data accuracy.
+2. **Platform Discrepancies:** Out of these, 576 tracks were most played on YouTube and 449 on Spotify, suggesting incomplete or consistent recording of views and streams.
+3. **No Data:** 21 tracks had both views and streams equal to zero, alongside missing metrics like title, comments, and likes.
+4. **Incomplete data:** Certain tracks lack critical information such as audio features, or comments.
+5. Popular artists with significant audiences also appear in the zero-views or zero-streams category, contradicting expected data trends.
+
+Initially, an investigation was conducted to check for potential duplicate records in the dataset using this query:
+
+    ` ` `
+    SELECT artist, album, track, COUNT(*) AS duplicate_count
+    FROM spotify
+    GROUP BY artist, track, album
+    HAVING COUNT(*) > 1
+    ORDER BY duplicate_count DESC;
+    ` ` ` 
+While some tracks appear multiple times under the same artist, further inspection revealed these tracks belong to different album types. 
 
 ## Data Cleaning Framework
 1. Cross-validate zero values for views and streams for tracks using external sources.
 2. Exclude or flag tracks with both views and streams equal to zero.
 
 ## Data Cleaning Process
-1. 
 1. Queried tracks with zero views or streams or both to identify the extent of inconsistencies.
 2. Replaced zero values with NULL to better reflect missing data.
 3. Flagged records with views and streams as NULL for further investigation.
 4. Compared track attributes with external data sources to validate anomalies.
 
 ## Observations and Patterns in Data Quality Issues
-1. **Tracks with Zero views by Artist:** There are 168 tracks with zero views on YouTube. Several artists were found to have tracks with zero views on YouTube.
-        • Jesse & Joy - 10 tracks
-        • Zé Neto & Cristiano - 10 tracks, and more
-    This issue also extends to globally recognized artists:
-        • Simon & Garfunkel - 10 tracks
-        • Selena Gomez & The Scene - 10 tracks
-    **Pattern Observed:**
-        • Many of the songs of artists are duets.
+**Tracks with Zero Views** 
+1. Findings:
+      • A total of 470 tracks were identified with views = 0.
+      • Out of these, 449 tracks have the following characteristics :
+               official_video = 'false
+               most_played_on = 'Spotify'
+      • This suggests that these tracks might be exclusive to Spotify, lacking YouTube-related metrics.
+      • The remaining 21 tracks have both views = 0 and streams = 0, indicating no engagement data across both 
+         platforms. 
