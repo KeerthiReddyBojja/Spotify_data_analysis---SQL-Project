@@ -49,34 +49,39 @@ The dataset provides a detailed compilation of music-related information, focusi
 4. **Incomplete data:** Certain tracks lack critical information such as audio features, or comments.
 5. Popular artists with significant audiences also appear in the zero-views or zero-streams category, contradicting expected data trends.
 
-Initially, an investigation was conducted to check for potential duplicate records in the dataset using this query:
-
-    ` ` `
-    SELECT artist, album, track, COUNT(*) AS duplicate_count
-    FROM spotify
-    GROUP BY artist, track, album
-    HAVING COUNT(*) > 1
-    ORDER BY duplicate_count DESC;
-    ` ` ` 
-While some tracks appear multiple times under the same artist, further inspection revealed these tracks belong to different album types. 
-
-## Data Cleaning Framework
-1. Cross-validate zero values for views and streams for tracks using external sources.
-2. Exclude or flag tracks with both views and streams equal to zero.
-
 ## Data Cleaning Process
-1. Queried tracks with zero views or streams or both to identify the extent of inconsistencies.
-2. Replaced zero values with NULL to better reflect missing data.
-3. Flagged records with views and streams as NULL for further investigation.
-4. Compared track attributes with external data sources to validate anomalies.
+**Identified Issues**
+1. Zero Engagement: 1024 tracks have either views or streams as '0'. Of these:
+        • 470 tracks had views = 0
+        • 576 tracks had views = 0
+        • 21 tracks had views and streams = 0.
+2. Fan-Made Content: Tracks uploaded by non-artist accounts or channels.
+3. Collaboration Content: OSTs and group songs associated with channels not matching the artist.
+4. Data Gaps: Missing fields like title, comments, and likes in specific records.
 
-## Observations and Patterns in Data Quality Issues
-**Tracks with Zero Views** 
-1. Findings:
-      • A total of 470 tracks were identified with views = 0.
-      • Out of these, 449 tracks have the following characteristics :
-               official_video = 'false
-               most_played_on = 'Spotify'
-      • This suggests that these tracks might be exclusive to Spotify, lacking YouTube-related metrics.
-      • The remaining 21 tracks have both views = 0 and streams = 0, indicating no engagement data across both 
-         platforms. 
+**Cleaning Steps**
+1. Handled Zero Values:
+        • Replaced '0' in views and streams with 'NULL' to signify missing data.
+        • Flagged records with views and streams = 'NULL'  for investigation.
+2. Analyzed official_video and Channel discrepancies:
+        • Identified tracks with official_video = 'false' and mismatched artist and channel.
+        • Flagged records that appeared to be fan-made or unofficial content, ensuring transparency and accuracy in the dataset.
+4. Add Investigation flag:
+      Introduced flagged_for_investigation to tag records for further inspection.
+       • Flagged for Investigation 1 - Tracks with both views and streams = NULL.
+       • Flagged for Investigation 2 - Tracks with stream = NULL, official_video = false, and artist not matching channel.
+      • Flagged for Investigation 3 - Tracks with views = NULL, official_video = false.
+6. Addressed Platform-Specific trends:
+        • Validated most_played_on with associated metrics (views and streams).
+
+## Assumptions and Challenges
+1. Channels using artist names but not owned by them were flagged.
+2. Verified content types like lyric videos, and soundtracks.
+3. Tracks with engagement only on one platform were assumed to be exclusive releases.
+
+## Results and Observations
+1. Flagged 21 records - tracks with no engagement on both platforms.
+2. Fan-Made Content - 160 records uploaded by non-artist channels.
+3. Validated and retained records  like OSTs, collaborations.
+4. 469 records with views = NULL and most_played_on = Spotify flagged for exclusivity.
+5. Cleaned and prepared dataset for analysis. 
