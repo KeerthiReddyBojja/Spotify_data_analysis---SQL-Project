@@ -85,3 +85,12 @@ The dataset provides a detailed compilation of music-related information, focusi
 3. Validated and retained records  like OSTs, collaborations.
 4. 469 records with views = NULL and most_played_on = Spotify flagged for exclusivity.
 5. Cleaned and prepared dataset for analysis. 
+
+## Issue Tracking Table
+
+| ISSUE ID | ISSUE DESCRIPTION | ISSUE TYPE | RESOLVED | RESOLUTION NOTES |
+| ---------------------------------------------------------------------------------------|
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
