@@ -1,4 +1,4 @@
-# SPOTIFY CLEANING DATA ANALYSIS PROJECT - SQL
+# SPOTIFY DATA CLEANING PROJECT - SQL
 
 ## Table of Contents
 • [Introduction](https://github.com/KeerthiReddyBojja/Spotify_data_analysis---SQL-Project/edit/main/README.md#introduction)
